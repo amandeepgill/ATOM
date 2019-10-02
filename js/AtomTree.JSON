@@ -1,0 +1,52 @@
+{
+  \"expanded\": true,
+  \"key\": \"root_1\",
+  \"title\": \"root\",
+  \"children\": [
+    {
+      \"expanded\": true,
+      \"folder\": true,
+      \"key\": \"_2\",
+      \"title\": \"AppName\",
+      \"children\": [
+        {
+          \"expanded\": true,
+          \"folder\": true,
+          \"icon\": \"customdoc1.gif\",
+          \"key\": \"_3\",
+          \"title\": \" Page:  Social Security Intranet-OfficialIntranet Website\",
+          \"tooltip\": \" Page:  Social Security Intranet-OfficialIntranet Website\",
+          \"data\": {
+            \"nodeTyp\": \"Page\"
+          },
+          \"children\": [
+            {
+              \"expanded\": true,
+              \"folder\": true,
+              \"icon\": \"customdoc1.gif\",
+              \"key\": \"_4\",
+              \"title\": \"a\",
+              \"tooltip\": \"a\",
+              \"data\": {
+                \"nodeTyp\": \"ObjectType\"
+              },
+              \"children\": [
+                {
+                  \"folder\": true,
+                  \"icon\": \"customdoc1.gif\",
+                  \"key\": \"_5\",
+                  \"title\": \"ObjectName\",
+                  \"tooltip\": \"ObjectName\",
+                  \"data\": {
+                    \"objProp\": \"top: C: 209.5800018310547: R: left: C: 23.959991455078125: R: width: C: 132: R: height: C: 16: R: tag: C: A: R: attid: C: 59: R: url: C: http: \/\/eis.ba.ssa.gov\/eis\/dcpea\/emplserv.html: R: type: C: a: R: id: C: : R: name: C: : R: event: C: click: R: value: C: Employee Resources: R: href: C: \/eis\/dcpea\/emplserv.html\",
+                    \"nodeTyp\": \"Object\"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

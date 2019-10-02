@@ -1,0 +1,157 @@
+/* style of the dom inspector panel*/
+#cz\.vutbr\.fit\.xkovac36\.dom-panel {
+	position: fixed;
+    width: 30%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: scroll;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+/* style for the main panel */
+#cz\.vutbr\.fit\.xkovac36\.main-panel {
+	position: relative;
+    width: 70%;
+    overflow: scroll;
+}
+
+#cz\.vutbr\.fit\.xkovac36\.dom-table td {
+    border: 1px solid #eee;
+}
+
+/* Color for HTML tags in inspector */
+.cz\.vutbr\.fit\.xkovac36\.node {
+    color: #88129F;
+}
+
+/* Color for equal sign between attribute and it's value */
+.cz\.vutbr\.fit\.xkovac36\.special {
+    color: #BCBCBD;
+}
+
+/* Color for HTML element attributes */
+.cz\.vutbr\.fit\.xkovac36\.attribute {
+    color: #994500;
+}
+
+/* Color for attribute value */
+.cz\.vutbr\.fit\.xkovac36\.attributeValue {
+    color: #1A1AA6;
+}
+
+/* HighLight Selected Element */
+.cz\.vutbr\.fit\.xkovac36\.selected {
+    background-color: #A0C5E8! important;
+}
+
+/* Hide/Show Elements */
+.cz\.vutbr\.fit\.xkovac36\.hidden {
+    display: none !important;
+}
+
+.cz\.vutbr\.fit\.xkovac36\.block {
+	display: block !important;
+}
+
+/*
+ Based on: http://code.stephenmorley.org/javascript/collapsible-lists/
+*/
+/* The whole tree */
+.cz\.vutbr\.fit\.xkovac36\.treeView {
+  -moz-user-select:none;
+  position:relative;
+}
+
+.cz\.vutbr\.fit\.xkovac36\.treeView ul {
+  margin:0 0 0 -1.5em;
+  padding:0 0 0 1.5em;
+}
+
+.cz\.vutbr\.fit\.xkovac36\.treeView ul ul {
+  background:url('http://code.stephenmorley.org/javascript/collapsible-lists/list-item-contents.png') repeat-y left;
+}
+
+ul {
+  display: block;
+  padding: 0;
+}
+
+.cz\.vutbr\.fit\.xkovac36\.treeView li.cz\.vutbr\.fit\.xkovac36\.lastChild > ul {
+  background-image:none;
+}
+
+/* Node holders in the treeview */
+.cz\.vutbr\.fit\.xkovac36\.treeView li {
+  margin:0;
+  padding:0;
+  background:url('http://code.stephenmorley.org/javascript/collapsible-lists/list-item-root.png') no-repeat top left;
+  list-style-position:inside;
+  list-style-image:url('http://code.stephenmorley.org/javascript/collapsible-lists/button.png');
+  cursor:auto;
+}
+
+/* Expanded Node*/
+.cz\.vutbr\.fit\.xkovac36\.treeView li .cz\.vutbr\.fit\.xkovac36\.collapsibleListOpen {
+  list-style-image:url('http://code.stephenmorley.org/javascript/collapsible-lists/button-open.png');
+  cursor:pointer;
+}
+
+/* Collapsed Node */
+.cz\.vutbr\.fit\.xkovac36\.treeView li .cz\.vutbr\.fit\.xkovac36\.collapsibleListClosed {
+  list-style-image:url('http://code.stephenmorley.org/javascript/collapsible-lists/button-closed.png');
+  cursor:pointer;
+}
+
+.cz\.vutbr\.fit\.xkovac36\.treeView li li {
+  background-image:url('http://code.stephenmorley.org/javascript/collapsible-lists/list-item.png');
+  padding-left:1.5em;
+}
+
+/* Last node at give level */
+.cz\.vutbr\.fit\.xkovac36\.treeView li.cz\.vutbr\.fit\.xkovac36\.lastChild {
+  background-image:url('http://code.stephenmorley.org/javascript/collapsible-lists/list-item-last.png');
+}
+
+/* Last node at give level */
+.cz\.vutbr\.fit\.xkovac36\.treeView li.cz\.vutbr\.fit\.xkovac36\.collapsibleListOpen.cz\.vutbr\.fit\.xkovac36\.lastChild {
+  background-image:url('http://code.stephenmorley.org/javascript/collapsible-lists/list-item-last-open.png');
+}
+
+/*
+ 	Based on: https://www.sitepoint.com/building-custom-right-click-context-menu-javascript/
+ */
+/* The context menu panel */
+.cz\.vutbr\.fit\.xkovac36\.context-menu {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  padding: 0 12px 0 12px;
+  background-color: #fff;
+  border: solid 1px #dfdfdf;
+  box-shadow: 1px 1px 2px #cfcfcf;
+}
+
+/* Context menu action holders */
+.cz\.vutbr\.fit\.xkovac36\.context-menu li {
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 4px;
+}
+
+/* The context menu actions */
+.cz\.vutbr\.fit\.xkovac36\.context-menu-item {
+  display: block;
+  padding: 4px 12px;
+  color: #0066aa;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cz\.vutbr\.fit\.xkovac36\.context-menu-item:hover {
+  color: #fff;
+  background-color: #0066aa;
+}
+

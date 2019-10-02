@@ -1,0 +1,81 @@
+
+         .ui-grid-obj Table{
+			border: 1px solid black;
+			background-color:lightgrey;
+			padding-top: 10px;
+			padding-right: 10px;
+			padding-bottom: 10px;
+			padding-left: 10px;
+            margin-top: 10px
+		}
+
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #333;
+    margin: 1px 1px 1px 1px ;
+    background: url("../images/dark_Tire.png") ;
+    background-repeat: repeat;
+}
+
+.windowHdr{
+    display:flex;
+
+    background: url("../images/squared_metal.png") ;
+    background-repeat: repeat;
+    color: black;
+}
+
+.fragment {
+    /*font-size: 12px;*/
+    /*font-family: tahoma;*/
+    display:inline-block;
+    border: 3px solid #ccc;
+    color: #555;
+    display: block;
+    padding: 2px;
+    box-sizing: border-box;
+    text-decoration: none;
+min-height: 230px;
+}
+
+/* .close {
+    float : right;
+    font-weight: bold;
+    padding:2px 5px;
+    background:#565656;
+    margin-bottom: 10px;
+    font-size: 10px;
+     margin-left: 5px;
+} */
+
+
+.button {
+  padding: 2px 2px;
+  font-size: 10px;
+  padding: 4px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  background-color: #565656;
+  color: white;
+  border: none;
+  /*border-radius: 15px;*/
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+
+
+.navbar-fixed-left {
+  width: 30px;
+  position: fixed;
+  border-radius: 0;
+  height: 100%;
+}

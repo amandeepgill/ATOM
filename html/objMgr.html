@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <title>ATOM Object Manager</title>
+<!--	<link rel="stylesheet" href="../css/jquery-ui.min.css">
+	<link rel="stylesheet" href="../css/jquery-ui.theme.css">
+	<link rel="stylesheet" href="../css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="../css/objMgr.css">
+    <link rel="stylesheet" href="../css/skin-win8/ui.fancytree.css">
+    <link rel="stylesheet" href="../css/skin-win8/acid_dom.css">
+
+	<script src="../js/jquery-3.2.1.js"> </script>
+	<script src="../js/jquery-ui.min.js"></script>
+	<script src="../js/jquery.dataTables.js"></script>
+     <script src="../js/frontend.js"></script>
+     <script src="../js/jquery.fancytree.min.js"></script>
+    <script src="../js/jquery.fancytree.edit.js"></script>
+    <script src="../js/jquery.fancytree.dnd.js"></script>
+    <script src="../js/jquery.fancytree.filter.js"></script>
+    <script src="../js/objectTree.js"></script>
+    <script src="../js/inspector.js"></script>
+    <script src="../js/acid_dom.js"></script>-->
+
+
+
+
+	<script type="text/javascript">
+
+	function changeScreenSize() {
+				//window.moveTo(0,0);
+       // window.resizeTo(300,900);
+    }
+
+    function ShowHideObjPropFrame (){
+        $("#objPropOuterFrame").toggle();
+    }
+
+     function ShowHideTreeFrame (){
+        $("#objTreeOutrFrame").toggle();
+     }
+
+
+
+		$(document).ready(function() {
+			$('#ObjectPropTable').DataTable({
+				"bPaginate": false,
+				"bLengthChange": false,
+				"bFilter": false,
+				"bInfo": false,
+				"bAutoWidth": false,
+				"language": {"emptyTable": "No Objects Properties to Display"}
+			 });
+
+        //Show Hide Object Tree Frame from Nav Bar
+            $("#SHObjPropBttn").click(function(){
+                $("#objPropOuterFrame").toggle();
+            });
+        //Show Hide Object Property Frame from Nav Bar
+            $("#SHObjTreeBttn").click(function(){
+                $("#objTreeOutrFrame").toggle();
+            });
+
+          //var title=$(document).find("title").text();
+
+
+		} );
+	</script>
+
+
+  <style>
+  </style>
+
+  </head>
+  <body onload="changeScreenSize()">
+
+<!-- Top Navigation Bar -->
+
+<div class="navbar navbar-inverse navbar-fixed-left">
+
+</div>
+
+<span class="ui-icon ui-icon-alert">TTTTTTTTTTTTTTTT</span>
+
+            <div class="topnav" id="myTopnav" >
+                <h3>ATOM Object Manager</h3>
+                <button class="button" id="SHObjTreeBttn">+/- Obj Tree</button>
+                <button class="button" id="SHObjPropBttn">+/- Obj Prop</button>
+            </div>
+
+<!-- Object Tree -->
+            <a class="fragment" id="objTreeOutrFrame">
+                <div id="objTreeFrame">
+
+                    <span id='closeTree' class="close" onclick="ShowHideTreeFrame()">x</span>
+                            <div class="topnav" id="myTopnav">
+                                <button class="button" onCLick="deleteSelected()">Delete</button>
+                                <button class="button" onCLick="SaveTreeAsJSON()">SaveAsJSON</button>
+                                <button class="button" onCLick="LoadFromJSON()">LoadFromJSON</button>
+                            </div>
+
+                            <p>
+                                <label>Search:</label>
+                                <input id="search" placeholder="..." autocomplete="off">
+                                <button id="btnResetSearch">&times;</button>
+                                <span id="matches"></span>
+                            </p>
+
+                             <div class="widget-tree" id="tree">
+                                    <div class="widget-tree" id="objTree"></div>
+                             </div>
+
+                </div>
+            </a>
+
+ <!-- Object Tree  Details-->
+            <a class="fragment" id="objTreeOutrFrame">
+                <div id="objTreeFrame">
+                    <span id='closeTree' class="close" onclick="ShowHideTreeFrame()">x</span>
+                            <div class="topnav" id="myTopnav">
+
+                            </div>
+                             <div class="widget-tree" id="treeDetails">
+                                    <div class="label"><strong>Object Properties</strong></div>
+                                    <fieldset id="objPropFormID" style="display:block">
+                                             <legend>Identification Properties</legend>
+                                    </fieldset>
+                                    <fieldset id="objPropFormDflt" style="display:block">
+                                             <legend>Default Properties</legend>
+                                    </fieldset>
+                             </div>
+
+                </div>
+            </a>
+
+
+
+
+
+<!-- Object Properties -->
+            <a class="fragment" id="objPropOuterFrame">
+                <div id="objProprFrame">
+                     <span id='closeProp' class="close" onclick="ShowHideObjPropFrame()">x</span>
+                            <div class="topnav" id="myTopnav">
+                                <button id="addObjToTree" class="button" onclick="addObjectToTree()">+</button>
+                            </div>
+                            <div class="ui-grid-Table">
+                                    <table width="100%" class="display"  id="ObjectPropTable"  cellspacing="0">
+                                        <caption id="ObjPropCptn"> Page: Social Security Intranet-OfficialIntranet Website</caption>
+                                        <thead>
+                                            <tr valign="top">
+                                                <th>Property</th>
+                                                <th>Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                        <!--Delete from here-->
+<!--                                                                <tr>
+                                                                        <td>attid</td>
+                                                                        <td>61</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>height</td>
+                                                                        <td>16</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>href</td>
+                                                                        <td>/eis/security-pii.htm</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>id</td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>left</td>
+                                                                        <td>23.959991455078125</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>name</td>
+                                                                        <td></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>tag</td>
+                                                                        <td>A</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>top</td>
+                                                                        <td>244.3999786376953</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>type</td>
+                                                                        <td>a</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>url</td>
+                                                                        <td>http://eis.ba.ssa.gov/eis/dcpea/emplserv.html</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>value</td>
+                                                                        <td>Fraud, Security & PII</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>width</td>
+                                                                        <td>129</td>
+                                                                    </tr>-->
+
+                                                        <!--Delete till here-->
+                                        </tbody>
+
+                                    </table>
+                            </div>
+
+                </div>
+            </a>
+
+
+  </body>
+</html>

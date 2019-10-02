@@ -1,0 +1,131 @@
+<div class="container" id='IfStatementGenContainer'>
+        <div class="ui grid page">
+            <div class="column">
+                <div class="ui segment">
+                    <h4 class="ui dividing header black"><i class="random icon"></i>Conditional Statements</h4>
+                    <div class="ui menu top" id="ForTab">
+                        <a class="active item" data-tab="If">If</a>
+                        <a class="item" data-tab="ElseIf">Else If</a>
+                        <a class="item" data-tab="Else">Else</a>
+                        <a class="item" data-tab="Switch">Switch</a>
+                    </div>
+                    <div class="ui active tab" data-tab="If">
+                        <div class="ui tiny form segment" style="padding:5px; margin:2px;" id="IfConditionForm">
+                            <div class="four fields">
+                                <div class="two wide required field">
+                                    <label>Select Variable</label>
+                                    <div class="ui compact selection dropdown" id="IfVarDropDown">
+                                        <input type="hidden" name="lefSideVar">
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text"></div>
+                                        <div class="menu">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="three wide required field">
+                                    <label>Operator</label>
+                                    <div class="ui compact selection dropdown" id="IfOprtrDropDown">
+                                        <input type="hidden" name="operator">
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text"></div>
+                                        <div class="menu">
+                                            <div class="item" data-value="lessThan">&lt Less Than</div>
+                                            <div class="item" data-value="lessThanEqual">&lt=L ess Than Equal To</div>
+                                            <div class="item" data-value="grtrThan">&gt Greater Than</div>
+                                            <div class="item" data-value="grtrThanEqual">&gt= Greater Than Equal To</div>
+                                            <div class="item" data-value="equalTo">== Equal To</div>
+                                            <div class="item" data-value="notEqualTo">!= Not Equal To</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="required three wide field">
+                                    <label>Compare With</label>
+                                    <div class="ui compact selection dropdown" id="IfRghtVarDropDown">
+                                        <input type="hidden" name="lefSideVar">
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text"></div>
+                                        <div class="menu">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="five wide field" style="width:600px">
+                                    <label>Description</label>
+                                    <textarea rows="1" id="varStepDesc">{{VARDESC}}</textarea>
+                                </div>
+                            </div>
+                            <div class="extra content" style="padding:4px">
+                                <div class="ui mini black primary submit button" id='{{VarBttnID}}'>{{VarBttnNM}}</div>
+                                <button class="right ui mini button black" id='CancelIf'>Cancel</button>
+                                <div class="ui error message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui tab" data-tab="ElseIf">
+                        <div class="ui tiny form segment" style="padding:5px; margin:2px;" id="ElseIfConditionForm">
+                            <div class="four fields">
+                                <div class="two wide required field">
+                                    <label>Select Variable</label>
+                                    <div class="ui compact selection dropdown" id="ElseIfVarDropDown">
+                                        <input type="hidden" name="lefSideVar">
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text"></div>
+                                        <div class="menu">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="three wide required field">
+                                    <label>Operator</label>
+                                    <div class="ui compact selection dropdown" id="ElseIfOprtrDropDown">
+                                        <input type="hidden" name="operator">
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text"></div>
+                                        <div class="menu">
+                                            <div class="item" data-value="lessThan">&lt Less Than</div>
+                                            <div class="item" data-value="lessThanEqual">&lt=L ess Than Equal To</div>
+                                            <div class="item" data-value="grtrThan">&gt Greater Than</div>
+                                            <div class="item" data-value="grtrThanEqual">&gt= Greater Than Equal To</div>
+                                            <div class="item" data-value="equalTo">== Equal To</div>
+                                            <div class="item" data-value="notEqualTo">!= Not Equal To</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="required three wide field">
+                                    <label>Compare With</label>
+                                    <div class="ui compact selection dropdown" id="ElseIfRghtVarDropDown">
+                                        <input type="hidden" name="lefSideVar">
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text"></div>
+                                        <div class="menu">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="five wide field" style="width:600px">
+                                    <label>Description</label>
+                                    <textarea rows="1" id="varStepDesc">{{VARDESC}}</textarea>
+                                </div>
+                            </div>
+                            <div class="extra content" style="padding:4px">
+                                <div class="ui mini black primary submit button" id='{{VarBttnID}}'>{{VarBttnNM}}</div>
+                                <button class="right ui mini button black" id='CancelIf'>Cancel</button>
+                                <div class="ui error message"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui tab" data-tab="Else">
+                        <h4 class="ui dividing header black">Click Add Button to Add Else Statement to Test Flow</h4>
+                        <div class="extra content" style="padding:4px">
+    
+                            <button class="center ui mini button black" id='CancelIf'>Add</button>
+    
+                        </div>
+                    </div>
+                    <div class="ui tab" data-tab="Switch">
+                        Switch content
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>

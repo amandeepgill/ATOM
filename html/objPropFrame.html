@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <title>ATOM Object Manager</title>
+	<link rel="stylesheet" href="../css/jquery-ui.min.css">
+	<link rel="stylesheet" href="../css/jquery-ui.theme.css">
+	<link rel="stylesheet" href="../css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="../css/objMgr.css">
+
+	<script src="../js/jquery-3.2.1.js"> </script>
+	<script src="../js/jquery-ui.min.js"></script>
+	<script src="../js/jquery.dataTables.js"></script>
+  <script src="../js/frontend.js"></script>
+
+	<script type="text/javascript">
+
+	function changeScreenSize() {
+				//window.moveTo(0,0);
+       // window.resizeTo(300,900);
+    }
+
+
+		$(document).ready(function() {
+			$('#ObjectPropTable').DataTable({
+				"bPaginate": false,
+				"bLengthChange": false,
+				"bFilter": true,
+				"bInfo": false,
+				"bAutoWidth": false,
+				"language": {"emptyTable": "No Object Properties to Display"},
+				"scrollY":  "150px",
+        "scrollCollapse": true,
+			 });
+
+	//		$('#ObjectPropTable').dataTable( {
+		//			"language": {"emptyTable": "No date available in table"}} );
+				//Set Width of Object Viewer div
+		} );
+	</script>
+
+
+  <style></style>
+
+  </head>
+  <body onload="changeScreenSize()">
+
+				<div class="topnav" id="myTopnav">
+					<button class="button">Add to OR</button>
+				</div>
+				<div class="ui-grid-Table">
+						<table width="100%" class="display"  id="ObjectPropTable"  cellspacing="0">
+							<thead>
+								<tr valign="top">
+									<th>Property</th>
+									<th>Value</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+				</div>
+
+  </body>
+</html>

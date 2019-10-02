@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <title>ATOM</title>
+    <meta  http-equiv="X-UA-Compatible" content="IE=Edge" language="english"/>
+    <title>ATOM</title>
+	<link rel="stylesheet" href="../css/jquery-ui.min.css">
+	<link rel="stylesheet" href="../css/jquery-ui.theme.css">
+	<link rel="stylesheet" href="../css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="../css/objMgr.css">
+    <link rel="stylesheet" href="../css/skin-win8/ui.fancytree.css">
+    <link rel="stylesheet" href="../css/jquery.contextMenu.css">
+
+<!--DOM CSS-->
+   <!--  <link rel="stylesheet" href="../css/acid_dom.css">-->
+    <!-- <link rel="stylesheet" href="../css/dom-Inspector.css">-->
+   <!-- <link rel="stylesheet" href="../css/Dom-Inspect1.css"-->
+
+<script>if (typeof module==='object'){window.module=module; module=undefined;}</script>
+
+
+	<script src="../js/jquery-3.2.1.js"> </script>
+	<script src="../js/jquery-ui.min.js"></script>
+	<script src="../js/jquery.dataTables.js"></script>
+    <script src="../js/frontend.js"></script>
+    <script src="../js/jquery.fancytree.min.js"></script>
+    <script src="../js/jquery.fancytree.edit.js"></script>
+    <script src="../js/jquery.fancytree.dnd.js"></script>
+    <script src="../js/jquery.fancytree.filter.js"></script>
+    <script src="../js/objectTree.js"></script>
+    <script src="../js/FileSaver.js"></script>
+    <script src="../js/jquery.fancytree.contextMenu.js"></script>
+    <script src="../js/spy.js"></script>
+
+    <script>if (window.module=module) module=window.module;</script>
+
+<!--Dom Scripts-->
+       <!--<script src="../js/acid_dom.min.js"></script>-->
+      <!-- <script src="../js/acid-dom.js"></script>-->
+   <!-- <script src="../js/inspector.js"></script>-->
+     <!--  <script src="../js/dom_inspector.js"></script>-->
+    <!-- <script src="../js/Dom-Inspect1.js"></script>-->
+
+
+    <script>
+
+$(document).ready(function() {
+
+            const electronTitlebarWindows = require("electron-titlebar-windows");
+            const { remote } = require('electron');
+        
+            /** Options */
+            let titlebar = new electronTitlebarWindows({
+                darkMode: true,
+                color: 'rgb(220, 200, 200)',
+                backgroundColor: 'rgb(35, 35, 35)',
+                draggable: true,
+                fullscreen: false
+            });
+        
+            /**
+             * DOM
+             */
+            titlebar.appendTo(document.body);
+        
+        
+            /** Event#close */
+            titlebar.on('close', () => {
+                console.info('close');
+        
+                remote.getCurrentWindow().close();
+            });
+        
+            /** Event#fullscreen */
+            titlebar.on('fullscreen', () => {
+                console.info('fullscreen');
+        
+                remote.getCurrentWindow().setFullScreen(true);
+            });
+        
+            /** Event#minimize */
+            titlebar.on('minimize', () => {
+                console.info('minimize');
+        
+                remote.getCurrentWindow().minimize();
+            });
+        
+            /** Event#maximize */
+            titlebar.on('maximize', () => {
+                console.info('maximize');
+        
+                remote.getCurrentWindow().setFullScreen(false);
+                remote.getCurrentWindow().maximize();
+            });
+
+        });
+        </script>
+
+	<script type="text/javascript">
+        	$(document).ready(function() {
+/*                $('#middleCol').resizable({
+                    handles: 'n,w,s,e',minWidth: 200,
+                    maxWidth: 400,
+                    helper: "ui-resizable-helper"
+                });*/
+//$('#objTreeOutrFrame').resizable();
+
+				$("#myorMgrNav").resizable();
+                 $( document ).tooltip();
+                 $( "#middleCol" ).droppable();
+                 $("#RepoMainMenu").menu();
+   		        var wH = $(window).height();
+            //$('.leftSideBar').css({height: wH});
+			//$('#middleCol').css({height: '100%'});
+
+			$("#ORcontainter").click(function(){
+				if ($("#myorMgrNav").css('width')<='0px') {
+					$("#myorMgrNav").css('width', '350px');
+                    $("#myorMgrNav").css('left', '20px');
+				    $("#middleCol").css('marginLeft', "370px");
+				} else{
+					$("#myorMgrNav").css('width', '0');
+                     $("#myorMgrNav").css('left', '0px');
+				    $("#middleCol").css('marginLeft', "0");
+                    $("#middleCol").css('margin', '30px 0px 0px 20px');
+				}
+			});
+
+
+
+            $("#HelpLink").click(function(){
+				if ($("#helpContainer").css('width')=='0px') {
+					$("#helpContainer").css('width', '350px');
+            //        if ($("#myorMgrNav").css('width')>'0px'){
+                     $("#middleCol").css('marginRight', '350px');
+                     //   $("#middleCol").css('margin','30px 500px 0px 20px');
+             //       }else{
+              //           $("#middleCol").css('marginLeft', "0");
+              //          $("#middleCol").css('margin', '30px 0px 0px 20px');
+               //         $("#middleCol").css('right', "350px");
+               //     }
+
+				} else{
+					$("#helpContainer").css('width', '0');
+                    $("#helpContainer").css('margin', '0px 0px 0px 20px');
+                     $("#middleCol").css('marginRight', '0');
+                 //     $("#middleCol").css('left', "350px");
+               /*     $("#middleCol").css('right', "0");*/
+				}
+			});
+
+
+        //Show Hide Object Tree Frame from Nav Bar
+            $("#SHObjPropBttn").click(function(){
+                $("#objPropOuterFrame").toggle();
+            });
+        //Show Hide Object Property Frame from Nav Bar
+            $("#SHObjTreeBttn").click(function(){
+                $("#objTreeDetailsOutrFrame").toggle();
+            });
+
+
+        //Save File as JSON
+            $("#saveAsJSON-lnk").click(function() {
+                var jsonStr=SaveTreeAsJSON();
+                alert(jsonStr);
+            var blob = new Blob([jsonStr], {type: "application/json"});
+
+            saveAs(blob, "testfile1.txt");
+            });
+
+
+});
+
+
+
+    function ShowHideObjPropFrame (){
+        $("#objPropOuterFrame").toggle();
+    }
+
+     function ShowHideTreeFrame (){
+        $("#objTreeOutrFrame").toggle();
+     }
+
+
+	</script>
+
+
+  <style>
+* {
+	margin: 0;
+	padding: 0;
+}
+
+
+.leftSideBar {
+    background: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    z-index: 500;
+    height: 100%;
+	float: left;
+    /*border: 1px solid yellow;*/
+}
+
+#TopHeader {
+        width: 100%;
+        height: 30px;
+        /*background: #232b2b;*/
+        overflow: hidden;
+        background-color: #333;
+        position: fixed; /* Set the navbar to fixed position */
+        top: 0; /* Position the navbar at the top of the page */
+    }
+
+#middleCol {
+	/*max-width:40%;*/
+	float: left;
+	/*padding: 0 0 0 15px;*/
+	background-color: lightgray;
+    margin:30px 0px 0px 20px;
+    position: fixed;
+	height:100%;
+
+    /*width: 100%;*/
+    transition: 0.5s;
+    /*padding-left: 15px;*/
+   /* border: 1px solid red;*/
+/*    background: url("../images/white_brick_wall.png") ;
+
+    background-repeat: repeat;*/
+}
+
+
+.orMgrNav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 30px;
+    left: 0;
+    right:20px;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+  /*  border: 2px solid green;*/
+	/*padding-left: 18px;*/
+}
+
+
+.rightSlide {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 30px;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    color: white;
+    /*padding-top: 60px;*/
+    /*border: 1px solid cyan;*/
+}
+
+
+#SideTabBar a {
+    position: absolute;
+    left: -20px;
+    transition: 0.2s;
+    padding-left: 20px;
+    width: 20px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+}
+
+#SideTabBar a:hover {
+    left: 0;
+}
+
+#ORcontainter {
+    top: 60px;
+    background-color: #4CAF50;
+}
+
+#DataContainer {
+    top: 100px;
+    background-color: #2196F3;
+}
+
+#HelpLink {
+    top: 140px;
+    background-color: crimson;
+}
+
+
+
+body {
+	/*font-size: 62.5%;*/
+/*	font-family: Garamond, sans-serif;*/
+    font-family:'Times New Roman', Times, serif;
+    font-size: 10px;
+
+}
+
+
+
+.fancytree-plain span.fancytree-node:hover span.fancytree-title {
+    max-width: 200px;
+}
+.fancytree-plain span.fancytree-active span.fancytree-title,
+.fancytree-plain span.fancytree-selected span.fancytree-title {
+  max-width: 200px;
+}
+
+.fancytree-plain span.fancytree-node:hover span.fancytree-title {
+  background-color: #eff9fe;
+  border-color: #70c0e7;
+  max-width: 200px;
+}
+
+   span.fancytree-title {
+        white-space: normal;
+        padding: 0 20px 0 5px;
+        max-width: 200px;
+    }
+
+
+    .inputAlign{
+        margin-right: 0pc;
+        vertical-align:inherit;
+    }
+
+
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 2px 4px;
+    font-size:12px;
+}
+
+
+/*
+@media screen and (max-height: 450px) {
+ /* .orMgrNav {padding-top: 15px;}
+  .rightSlide {padding-top: 15px;}
+}*/
+
+
+.dropbtn {
+    background-color: #565656;
+    color: white;
+    padding: 4px;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 10;
+    background-color:whitesmoke;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 999;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 6px 12px;
+    text-decoration: none;
+    display: block;
+    z-index: 999;
+}
+
+.dropdown-content a:hover {background-color:lightgray}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+
+/**   Old Dropdown menu Remove*/
+/*
+#menu {
+     margin: 0;
+     width: auto;
+     background-color: #565656;
+     font-size: 8px;
+     font-family: Tahoma, Geneva, sans-serif;
+     font-weight: bold;
+     text-align: left;
+     padding: 2px;
+}
+
+#menu ul {
+     margin: 0;
+     padding: 4px 0;
+     list-style: none;
+     height: auto;
+}
+
+#menu li {
+     display: inline;
+     padding: 4px;
+}
+
+#menu a {
+     color: #FFF;
+     padding: 4px;
+     text-decoration: none;
+}
+
+#menu a:hover {
+     background-color: #1B191B;
+     color: #FFF;
+     border-radius: 10px;
+     -webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+     -o-border-radius: 10px;
+}
+
+#menu li .active {
+     background-color: #1B191B;
+     color: #FFF;
+    border-radius: 10px;
+     -webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+     -o-border-radius: 10px;
+}*/
+
+legend {
+    margin:0 auto;
+}
+
+
+#orMgrDivCntr{ background: #737373;padding:1px;}
+
+.orMgrDivs {background:#ccc;margin:2px;}
+
+  </style>
+
+  </head>
+  <body >
+
+
+	<div id="TopHeader">
+	</div>
+
+	<div id="myorMgrNav" class="orMgrNav">
+		 <div id="orMgrDivCntr">
+            <div class="topnav" id="myTopnav" >
+                <div class="windowHdr">
+
+                    <div class="dropdown" style="padding-left:5px;float:left;">
+                        <button class="dropbtn">Repository</button>
+                        <div class="dropdown-content" id="RepoMainMenu">
+                            <a href="#">Create New</a>
+                            <li>  ---------</li>
+                            <a href="#">Load from XML</a>
+                            <a href="#" onCLick="LoadFromJSON()">Load from JSON</a>
+                            <li>  ---------</li>
+                            <a href="#">Save as XML</a>
+                            <a href="#" id="saveAsJSON-lnk">Save As JSON</a>
+                        </div>
+                    </div>
+
+            <input type="file" id="openselect" style="display:none"/>
+                    <div class="dropdown" style="padding-left:10px;">
+                        <button class="dropbtn">View</button>
+                        <div class="dropdown-content">
+                            <a href="#" onClick="ShowHideTreeFrame()">Toggle Tree</a>
+                            <a href="#" onclick="ShowHideObjPropFrame()">Toggle Tree Details</a>
+                            <a href="#">Toggle Object</a>
+                        </div>
+                    </div>
+                    <div style="float:right;padding-left:75px">
+                     <h3 style="float:right;text-align:right">ATOM Object Manager</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Object Tree -->
+         <a class="fragment" id="objTreeOutrFrame" style="margin-top:5px;">
+            <div  class="orMgrDivs">
+                        <div class="topnav" id="myTopnav">
+                             <div class="windowHdr">
+                                 <h3>Object Details</h3>
+                                 <div class="dropdown" style="margin-left:140px;">
+                                     <button class="button " title="Add New Object" id="addNodeToTreeUI" onCLick="addNewObjToTreefromUI()">A
+                                    </button>
+                                    <button class="button" id="treeConnecotr" title="Show Hide Tree Connectors" onCLick="toggleTreeConnector()">C
+                                     </button>
+                                    <button class="button" title="Delete Tree Node" onCLick="deleteSelected()">D
+                                     </button>
+                                    <button class="button" id='closeTree' title="Close Window" style="margin-left:3px;" onclick="ShowHideTreeFrame()">x
+                                    </button>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="windowHdr">
+                            <p>
+                                <label>Search:</label>
+                                <input id="search" placeholder="..." autocomplete="off">
+                                <button class="dropbtn" id="btnResetSearch">&times;</button>
+                                <span id="matches"></span>
+                            </p>
+                        </div>
+                            <div class="widget-tree" id="tree">
+                                <div class="widget-tree" id="objTree"></div>
+                            </div>
+
+                </div>
+             </a>
+<!--<div id="dialog-form" title="This is modal form">-->
+            <!-- Object Tree  Details-->
+            <a class="fragment" id="objPropOuterFrame" style="margin-top:5px;">
+                            <div  class="orMgrDivs">
+                                        <div class="topnav" id="myTopnav">
+                                            <div class="windowHdr">
+                                                <h3>Object Properties</h3>
+                                                <div class="dropdown" style="margin-left:140px;">
+                                                         <button class="button" title="Add Property" id="addProperty" onClick="addObjectPropUI()">Add
+                                                        </button>
+                                                         <button class="button" title="Save Changes" id="addProperty" onClick="saveObjChangesUI()">Save
+                                                        </button>
+                                                         <button class="button" title="Close Window" id="closeObjProp" style="margin-left:3px;" onClick="ShowHideObjPropFrame()">x
+                                                        </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <fieldset id="objPropUsedDtlsFldSet" style="display:block">
+                                            <legend><strong>Identification Properties</strong></legend>
+                                            <div class="ui-grid-Table">
+                                                <table width="100%" class="display"  id="ObjectUsedPropDtlsTable"  cellspacing="0">
+                                                <thead>
+                                                    <tr valign="top">
+                                                        <th>Name</th>
+                                                        <th>Value</th>
+                                                        <th>Id</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                                </table>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset id="objPropunUsedDtlsFldSet" style="display:block">
+                                            <legend><strong>Un-Used Properties</strong></legend>
+                                            <div class="ui-grid-Table">
+                                                <table width="100%" class="display"  id="ObjectUnusedPropDtlsTable"  cellspacing="0">
+                                                <thead>
+                                                    <tr valign="top">
+                                                        <th>Name</th>
+                                                        <th>Value</th>
+                                                        <th>Id</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                                </table>
+                                            </div>
+                                        </fieldset>
+
+
+                                        <div class="widget-tree" id="treeDetails">
+                                                <fieldset id="objPropFormDflt" style="display:block">
+                                                        <legend>Default Properties</legend>
+                                                </fieldset>
+                                        </div>
+                            </div>
+            </a>
+
+
+            <!-- Object Properties -->
+            <a class="fragment" id="objTreeObjPropRecvdFrame">
+                            <div class="orMgrDivs">
+                                <span id='closeProp' class="close" >x</span>
+                                        <div class="topnav" id="myTopnav">
+                                            <button id="addObjToTree" class="button" onclick="addObjectToTree()">+</button>
+                                        </div>
+                                        <div class="ui-grid-Table">
+                                                <table width="100%" class="display"  id="ObjectPropTable"  cellspacing="0">
+                                                    <caption id="ObjPropCptn"> Page: Social Security Intranet-OfficialIntranet Website</caption>
+                                                    <thead>
+                                                        <tr valign="top">
+                                                            <th>Property</th>
+                                                            <th>Value</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                                    <!--Delete from here-->
+            <!--                                                                <tr>
+                                                                                    <td>attid</td>
+                                                                                    <td>61</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>height</td>
+                                                                                    <td>16</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>href</td>
+                                                                                    <td>/eis/security-pii.htm</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>id</td>
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>left</td>
+                                                                                    <td>23.959991455078125</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>name</td>
+                                                                                    <td></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>tag</td>
+                                                                                    <td>A</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>top</td>
+                                                                                    <td>244.3999786376953</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>type</td>
+                                                                                    <td>a</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>url</td>
+                                                                                    <td>http://eis.ba.ssa.gov/eis/dcpea/emplserv.html</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>value</td>
+                                                                                    <td>Fraud, Security & PII</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>width</td>
+                                                                                    <td>129</td>
+                                                                                </tr>-->
+
+                                                                    <!--Delete till here-->
+                                                    </tbody>
+
+                                                </table>
+                                        </div>
+
+                            </div>
+            </a>
+	</div>
+
+
+
+	<div class="leftSideBar">
+		<div id="SideTabBar" class="orMgrNavTab">
+		<a href="#" id="ORcontainter">O</a>
+		<a href="#" id="DataContainer">D</a>
+        <a href="#" id="HelpLink">H</a>
+		</div>
+	</div>
+
+
+
+
+		<div id="middleCol" style="font-size:13px">
+                <h3> Test Area</h3>
+                <h4>Dolor consuetudium putamus nunc illum at. Qui vel accumsan zzril odio feugait. Iriureuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu nobis aliquam est qui nam. Est ii ad et quod consuetudium. Eu vero tation placerat illum dolore. Suscipit saepi</h4>
+<!-- <link rel="import" href="../html/objMgr.html">-->
+
+
+
+
+
+        </div>
+
+
+        <div id="helpContainer" class="rightSlide">
+            <p>Dolor consuetudium putamus nunc illum at. Qui vel accumsan zzril odio feugait. Iriure nobis algggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggiquam est qui nam. Est ii ad et quod consuetudium. Eu vero tation placerat illum dolore. Suscipit saepius aliquip commodo erat me. Consequat littera autem anteposuerit ullamcorper dolor. Legunt doming dignissim facer futurum quinta. Consuetudium ad magna tempor ut suscipit. Typi aliquam ex esse quarta qui.</p>
+			<br />
+            <p><a href="http://css-tricks.com/examples/SuperSimpleTwoColumn.zip">Download this example.</a></p>
+            
+
+
+            
+        </div>
+
+
+  </body>
+</html>

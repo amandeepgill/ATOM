@@ -1,0 +1,65 @@
+<html>
+        <head>
+
+                <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js">
+                </script>
+            <script type="text/javascript" src="https://golden-layout.com/files/latest/js/goldenlayout.min.js"></script>
+            <link type="text/css" rel="stylesheet" href="https://golden-layout.com/files/latest/css/goldenlayout-base.css" />
+            <link type="text/css" rel="stylesheet" href="https://golden-layout.com/files/latest/css/goldenlayout-dark-theme.css" />
+        </head>
+        
+        <script>
+            $( document ).ready(function() {
+                var myLayout = new GoldenLayout({
+	content:[{
+		type: 'row',
+		content:[{
+			type: 'component',
+			componentName: 'test-component'
+		}]
+	}]
+});
+
+myLayout.on( 'stackCreated', function( stack ){
+	stack
+		.header
+		.controlsContainer
+		.find( '.lm_close' ) //get the close icon
+		.off( 'click' ) //unbind the current click handler
+		.click(function(){
+			//add your own
+			if( confirm( 'really close this?' ) ) {
+				stack.remove();
+			}
+		});
+});
+
+myLayout.on( 'tabCreated', function( tab ){
+	tab
+		.closeElement
+		.off( 'click' ) //unbind the current click handler
+		.click(function(){
+			//add your own
+			if( confirm( 'really close this?' ) ) {
+				tab.contentItem.remove();
+			}
+		});
+});
+
+myLayout.registerComponent( 'test-component', function( container ){
+	container.getElement().html( '<h2>test</h2>' );
+  container.on('resize', function () {
+    //alert('resize');
+  });
+  container.on('close', function () {
+    alert('close');
+  });
+});
+
+myLayout.init();
+});
+        </script>
+        <body>
+                   
+            </body>
+        </html>

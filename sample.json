@@ -1,0 +1,110 @@
+"{"expanded":true,
+"key":"root_1",
+"title":"root",
+"children":[  
+   {  
+      "expanded":true,
+      "key":"_2",
+      "title":"AppName",
+      "children":[  
+         {  
+            
+            "key":"_3",
+            "title":"Google",
+            "data":{  
+               "nodeTyp":"Page"
+            },
+            "children":[  
+               {  
+                 
+                  "key":"_4",
+                  "title":"Link",
+                  "data":{  
+                     "nodeTyp":"ObjectType"
+                  },
+                  "children":[  
+                     {  
+                        "key":"_5",
+                        "title":"About",
+                        "data":{  
+                           "objProp":"objName:C: Link:R:value:C::R:innerText:C:About:R:xPATH:C:id(\"hptl\")/a[1]:R:css:C:div#hptl &gt; a:R:height:C:15.00:R:width:C:48.98:R:x:C:10:R:y:C:23:R:visible:C:true:R:addToTest:C:false:R:idProps:C:name;value:R:href:C:/intl/en/about/?fg=1&amp;utm_source=google.com&amp;utm_medium=referral&amp;utm_campaign=hp-header:R:frame:C:",
+                           "nodeTyp":"Object"
+                        }
+                     },
+                     {  
+                        "key":"_6",
+                        "title":"Store",
+                        "data":{  
+                           "objProp":"objName:C: Link:R:value:C::R:innerText:C:Store:R:xPATH:C:id(\"hptl\")/a[2]:R:css:C:div#hptl &gt; a:nth-of-type(2):R:height:C:15.00:R:width:C:46.08:R:x:C:62.59375:R:y:C:23:R:visible:C:true:R:addToTest:C:false:R:idProps:C:name;value:R:href:C:https://store.google.com/?utm_source=hp_header&amp;utm_medium=google_oo&amp;utm_campaign=GS100042:R:frame:C:",
+                           "nodeTyp":"Object"
+                        }
+                     }
+                  ]
+               },
+               {  
+                  
+                  "key":"_7",
+                  "title":"Element",
+                  "data":{  
+                     "nodeTyp":"ObjectType"
+                  },
+                  "children":[  
+                     {  
+                        "key":"_8",
+                        "title":"AboutStoreGmailImage",
+                        "data":{  
+                           "objProp":"objName:C: Element:R:value:C::R:innerText:C::R:id:C:hplogo:R:xPATH:C:id(\"hplogo\"):R:css:C:img#hplogo:R:height:C:201.00:R:width:C:272.00:R:x:C:354:R:y:C:89:R:visible:C:true:R:addToTest:C:false:R:idProps:C:name;value:R:frame:C:",
+                           "nodeTyp":"Object"
+                        }
+                     }
+                  ]
+               },
+               {  
+                  "key":"_9",
+                  "title":"Input Text",
+                  "data":{  
+                     "nodeTyp":"ObjectType"
+                  },
+                  "children":[  
+                     {  
+                        "key":"_10",
+                        "title":"Q",
+                        "data":{  
+                           "objProp":"objName:C: Input Text:R:name:C:q:R:value:C::R:innerText:C::R:id:C:lst-ib:R:xPATH:C:id(\"lst-ib\"):R:css:C:input[id = \"lst-ib\"]:R:Class:C:gsfi:R:height:C:34.00:R:width:C:403.00:R:x:C:262.5:R:y:C:323:R:visible:C:true:R:addToTest:C:false:R:idProps:C:name;value:R:frame:C:",
+                           "nodeTyp":"Object"
+                        }
+                     }
+                  ]
+               },
+               {  
+                  "key":"_11",
+                  "title":"Button",
+                  "data":{  
+                     "nodeTyp":"ObjectType"
+                  },
+                  "children":[  
+                     {  
+                        "key":"_12",
+                        "title":"BtnI",
+                        "tooltip":"BtnI",
+                        "data":{  
+                           "objProp":"objName:C: Button:R:name:C:btnI:R:value:C:I'm Feeling Lucky:R:innerText:C::R:id:C:gbqfbb:R:xPATH:C:id(\"gbqfbb\"):R:css:C:input#gbqfbb:R:height:C:36.00:R:width:C:142.58:R:x:C:485.578125:R:y:C:393:R:visible:C:true:R:addToTest:C:false:R:idProps:C:name;value:R:frame:C:",
+                           "nodeTyp":"Object"
+                        }
+                     },
+                     {  
+                        "key":"_13",
+                        "title":"BtnK",
+                        "data":{  
+                           "objProp":"objName:C: Button:R:name:C:btnK:R:value:C:Google Search:R:innerText:C::R:xPATH:C://input[@name=\"btnK\"]:R:css:C:form#tsf &gt; div:nth-of-type(2) &gt; div:nth-of-type(3) &gt; center &gt; input:R:height:C:36.00:R:width:C:125.75:R:x:C:351.828125:R:y:C:393:R:visible:C:true:R:addToTest:C:false:R:idProps:C:name;value:R:frame:C:",
+                           "nodeTyp":"Object"
+                        }
+                     }
+                  ]
+               }
+            ]
+         }
+      ]
+   }
+]
+}"

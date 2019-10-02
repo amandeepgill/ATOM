@@ -1,0 +1,80 @@
+//Hidden
+e.target.hidden
+retruns true or false
+
+
+//InnerText
+e.target.innerText
+
+
+//InnerHTML
+e.target.innerText
+
+e.target.outerHTML
+
+
+
+   function getFind(obj) {
+    for (i = 0; i < obj.childNodes.length; i++) {
+        if (obj.childNodes[i].tagName == "INPUT") {
+            if (obj.childNodes[i].type == "text") {
+                alert("this is Text Box.")
+            }
+            if (obj.childNodes[i].type == "checkbox") {
+                alert("this is CheckBox.")
+            }
+            if (obj.childNodes[i].type == "radio") {
+                alert("this is Radio.")
+            }
+        }
+        if (obj.childNodes[i].tagName == "SELECT") {
+            alert("this is Select")
+        }
+    }
+}
+
+
+
+
+e.target.tagName
+
+Page Name
+
+document.title
+
+
+Check object Type  and defaultr 
+
+Frame: clue: window.frameElement ,TAG Frameset or frame : Identy using: name or html id
+Image: Clue: Tag Name: img Identy using: alt and html tag and image type
+Link: Identy using tag a :html tag and text
+Page: 
+Button: Identy using:html tag and name and type
+Checkbox: Identy using:html tag and name and type
+Edit: Identy using:html tag and name and type
+element: Identy using:html tag and innertext
+File: Identy using:html tag and name and type
+List: Identy using:html tag and name
+Menu: Identy using:html tag and name
+RadioGroup: Identy using:html tag and name
+Table: Identy using:html tag
+Tree: Identy using:name
+
+
+
+Get all frames
+
+function all_frames_docs(c) {
+    var f=function(w) {
+        if(w.frames && w.frames.length) {
+            var i; for(i=0; i<w.frames.length; i++) f(w.frames[i])
+        } c(w.document) };
+    f(window) }
+
+
+
+
+
+
+
+

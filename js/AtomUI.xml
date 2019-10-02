@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Page>
+  <name>eWork - Establish Work Review</name>
+  <ObjectType>
+    <name>WebEdit</name>
+    <object type="WebEdit">
+      <name>ReasonForRevDrpDwn</name>
+      <idProperties>
+        <properties>
+          <property name="TagName">SELECT</property>
+          <property name="Name">RSNFORREV_CD</property>
+        </properties>
+      </idProperties>
+    </object>
+    <object type="DropDown">
+      <name>DropDown Display</name>
+      <idProperties>
+        <properties>
+          <property name="TagName">SELECT</property>
+          <property name="Name">RSNFORREV_CD</property>
+        </properties>
+      </idProperties>
+    </object>
+  </ObjectType>
+  <ObjectType>
+    <name>Button</name>
+    <object type="Button">
+      <name>ReasonForRevDrpDwn</name>
+      <idProperties>
+        <properties>
+          <property name="TagName">SELECT</property>
+          <property name="Name">RSNFORREV_CD</property>
+        </properties>
+      </idProperties>
+    </object>
+    <object type="DropDown">
+      <name>DropDown Display</name>
+      <idProperties>
+        <properties>
+          <property name="TagName">SELECT</property>
+          <property name="Name">RSNFORREV_CD</property>
+        </properties>
+      </idProperties>
+    </object>
+  </ObjectType>
+</Page>

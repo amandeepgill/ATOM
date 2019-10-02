@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FLEXI..Test Manager</title>
+     <!--<link href="C:/Users/agill7.CSCFED/Downloads/jquery-ui-1.11.4.custom/jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet">-->
+     <link href="../css/jquery-ui.min.css" rel="stylesheet">
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
+   <link rel="stylesheet" type="text/css" href="../css/jquery-ui.min.css">
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script src="../js/jquery-ui.min.js"></script>
+  <!--   <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script> -->
+    <script src="../js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="../js/themeswitcher.min.js"></script>
+    <!-- <script type="text/javascript" src="../js/handsontable.full.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.34.4/handsontable.full.css">
+
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.34.4/handsontable.full.js"></script>
+     <!--<script type="text/javascript" src="../js/validate.js"></script>-->
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+   <!--  <link href="../css/handsontable.full.css" rel="stylesheet">-->
+
+
+    <script type="text/javascript">
+//delete this later
+     $(document).ready(function(){
+$("#addORTree-button").button();
+$("#addORTree-button").onclick=function(){
+
+        alert("here");
+ var newListItem = document.createElement('div');
+    newListItem.innerText = 'New Item';
+    document.body.appendChild(newListItem);
+
+      }
+
+});
+    </script>
+
+    <script type="text/javascript" id="themeSwitcher">
+      $(document).ready(function(){
+        $("#switcher").themeswitcher({
+          imgpath: "../images/",
+          loadTheme: "smoothness"
+        });
+
+        // Sample UI widgets
+        $( "#progressbar" ).progressbar({
+        value: 37
+      });
+      $( "#slider" ).slider();
+
+
+      });
+    </script>
+
+<script type="text/javascript" id="pageOpenDialog">
+          $(document).ready(function() {
+          var dialog, form;
+          function selectTestType() {
+            var valid = true;
+           // allFields.removeClass( "ui-state-error" );
+            //valid = valid && checkLength( name, "username", 3, 16 );
+
+            if ( valid ) {
+              //$( "#TestDetails" ).value="A" ;
+               //$( "#TestDetails_TstDesc" ).value="B" ;
+                  dialog.dialog( "close" );
+            }
+            return valid;
+          }
+
+          dialog = $( "#dialog-form" ).dialog({
+            autoOpen: false,
+            dialogClass: "noclose",
+            modal: true,
+             buttons: {
+              "Submit":
+              {
+                id: "NewEditDialog_Submit",
+                click:selectTestType,
+                text:"Submit"
+              },
+            },
+            close: function() {
+
+            //Based on selected radio button
+                if ($('#NewTest:checked').val()== 'New') {
+                       $("#TestDetails_Name").val($("#NewEditDialog_TstNm").val()) ;
+                       $("#TestDetails_TstDesc").val($("#NewEditDialog_TstDesc").val()) ;
+                }
+                else if ($('#EditTest:checked').val() == 'Edit'){
+                       $("#TestDetails_Name").val($('#selectmenu').val());
+                };
+
+           //Reset Form values
+            //form[ 0 ].reset();
+            $("#UI_TestTypeSelect")[0].reset();
+           // Open Test Details
+           //$('#accordion .ui-accordion-content ').show();
+           $("#testDtlsHdr").click();
+
+            }
+          });
+
+          form = dialog.find( "form" ).on( "submit", function( event ) {
+            event.preventDefault();
+            selectTestType();
+          });
+          //open dialog box for test type selection
+          dialog.dialog( "open" );
+          $("#NewEditDialog").buttonset();
+          $('#NewEditDialog input[type=radio]').change(function() {
+                 var TestSel=this.value;
+                 var uiTestTypNew=document.getElementById("UI_TestType_New");
+                var uiTestTypEdit =  document.getElementById("UI_TestType_Edit");
+                var uiTestTypeSubmit =  document.getElementById("NewEditDialog_Submit");
+
+                if(TestSel == 'New'){
+                  uiTestTypEdit.style.display = 'none';
+                  uiTestTypNew.style.display = 'block';
+                  uiTestTypeSubmit.value="Submit";
+                  //alert(uiTestTypeSubmit.value);
+                 }
+                else if(TestSel == 'Edit'){
+                   uiTestTypEdit.style.display = 'block';
+                   uiTestTypNew.style.display = 'none';
+                   uiTestTypeSubmit.value="Edit Selected";
+                  //s alert(uiTestTypeSubmit.value);
+                }
+          });
+        });
+    </script>
+
+
+
+
+    <script type="text/javascript" id="TestDetailsScr">
+      $(document).ready(function() {
+         var spinner = $( "#spinner" ).spinner();
+         $('#spinner').spinner('option', 'min', 1);
+         $('#spinner').spinner('option', 'max', 99);
+         $("#spinner").width(30);
+         $("#spinner").attr({'min':1,'max':99,'maxlength':2});
+        //Set Checkbox as button
+         $( "#TestDetails_Reusable").button();
+         //Toggle Resuable Button Label
+         $("#TestDetails_Reusable").button().click(function () {
+         var text = $(this).is(':checked')? "Single Use": "ReUsable"
+         $(this).button('option', 'label', text);
+         });
+
+      });
+    </script>
+
+    <script type="text/javascript" id="ReusableFunctions">
+
+    ///Execute Query
+        function ExecuteQuery(sQuery,sResult){
+
+            var pog = require('pg');
+            // var conString = "postgres://flexi_app:flexi_app@localhost/flexi";
+            var conString = "postgres://flexi_app:flexi_app@127.0.0.1/flexi";
+
+            var client = new pog.Client(conString);
+            client.connect();
+            var query = client.query(sQuery);
+
+            query.on("row", function (row, result) {
+                result.addRow(row);
+            });
+
+            var arrRtrn=query.on("end", function (result) {
+                queryData=result.rows;
+                sResult(queryData);
+                client.end();
+             });
+        }
+
+        //var QueryTO=('SELECT * FROM dev."OR"');
+        //ExecuteQuery(QueryTO,function(queryResult){
+        // ExecuteQuery(sQuery,function(queryResult){  sQuery
+
+        //     return(queryResult);
+        // });
+    </script>
+
+
+    <script type="text/javascript" id="TestSteps">
+      $(document).ready(function() {
+
+        var addStepBtn=("#TestStep_AddStep");
+        var delStepBtn=("#TestStep_DelStep");
+        var addToFlowBtn=("#TestStep_AddToFlow");
+        $(delStepBtn).attr('disabled','disabled');
+        $(addToFlowBtn).attr('disabled','disabled');
+
+
+        ///Load avaibale Object Types in dropdown
+        var QueryTO=("select obj_name from dev.obj_typ where obj_type='Web'");
+        //select obj_name from dev.object_types where obj_type='Web'
+        ExecuteQuery(QueryTO,function(queryResult){
+            //return(queryResult);
+         var seloption = "";
+            $.each(queryResult,function(i){
+              seloption += '<option value="'+queryResult[i].obj_name+'">'+queryResult[i].obj_name+'</option>';
+            });
+
+          $('#selectObjectType').append(seloption);
+       });
+
+
+       ////Load Available repositories
+       var QueryTO=("select name from dev.or where app_id=1");
+       ExecuteQuery(QueryTO,function(queryResult){
+            //return(queryResult);
+         var seloption = "";
+            $.each(queryResult,function(i){
+              seloption += '<option value="'+queryResult[i].name+'">'+queryResult[i].name+'</option>';
+            });
+          //Selections are added to both repo selections in Object Select From and Select to
+          $('#FldSet_WebObj_AddNewObj_SelRepo').append(seloption);
+          $('#FldSet_WebObj_FromRepo_SelRepo').append(seloption);
+       });
+
+      $("#FldSet_WebObj_StepAction").hide();
+       //Update Avaibale actions/functions for the selected object type
+       $("#selectObjectType").change(
+           function()
+           {
+             var sObjTypeSelected=$(this).find("option:selected").val();
+
+                if (sObjTypeSelected != '...')
+                 {
+                     //Hide Perform Action Fielset
+                     $("#FldSet_WebObj_StepAction").show();
+                    //Show show Object Properties table based on selection
+                    $("#ObjPropsTbl").show();
+
+                    //Call Function to reset dropdown to default
+                    ResetPerfActionSel();
+
+                    var sEnv='dev'
+                    var sAppId='0,1'
+                    var QueryTO=("select B.reg_name from "+sEnv+".func A,"+sEnv+".func_obj_typ B,"+sEnv+".obj_typ C where A.func_id in "+
+                    "(select func_id from "+sEnv+".func A where A.app in ("+sAppId+") and A.script_env=1 and A.category=C.obj_type )"+
+                    "and A.func_id=B.func_id and B.reg_on=C.obj_typ_id and C.obj_type='Web' and C.obj_name='"+sObjTypeSelected+"'");
+
+                     ExecuteQuery(QueryTO,function(queryResult){
+                          //return(queryResult);
+                       var seloption = "";
+                          $.each(queryResult,function(i){
+                            seloption += '<option value="'+queryResult[i].reg_name+'">'+queryResult[i].reg_name+'</option>';
+                          });
+                        //Selections are added to both repo selections in Object Select From and Select to
+                        $('#Sel_PerfAction').append(seloption);
+                     });
+                 }
+                else
+                 {
+                  ResetPerfActionSel();
+                  ResetPerfActionFields();
+                  //Hide Perform Action Fielset
+                  $("#FldSet_WebObj_StepAction").hide();
+                  //Hide Object Properties table based on selection
+                    $("#ObjPropsTbl").hide();
+                 };
+           }
+        );
+
+    //Update FldSet_WebObj_StepAction based on  value selected in Sel_PerfAction
+ $("#Sel_PerfAction").change(
+           function()
+           {
+             //Remove All Existing Fields
+             ResetPerfActionFields();
+
+             var sActionSeleted=$(this).find("option:selected").val().trim();
+                if (sActionSeleted != '...')
+                 {
+
+                    var sObjTypeSelected=$("#selectObjectType").find("option:selected").val().trim();
+                    //Create Div to hold Edit or dropdown required for   { id:"ActionParamDiv", style:"display: inline-block" }
+                   var newTextBoxDiv = $(document.createElement('div')).attr( { id:"ActionParamDiv", style:"display: inline-block" });  //attr("id", 'ActionParamDiv');
+                     newTextBoxDiv.appendTo("#FldSet_WebObj_StepAction");
+
+                    var sEnv='dev'
+                    var sAppId='0,1'
+                    var QueryTO=("select D.param_id,D.ui_obj_typ,D.ui_text, D.ui_obj_val from "+
+                         sEnv+".func A, "+sEnv+".func_obj_typ B, "+sEnv+".obj_typ C,  "+sEnv+".func_param D where A.func_id=B.func_id"+
+                         " and A.func_id=D.func_id and B.reg_on=C.obj_typ_id and C.obj_type='Web' and C.obj_name='"+sObjTypeSelected+"'"+
+                         " and B.reg_name='"+sActionSeleted+"' and D.Ui_required='t' order by D.ui_obj_typ desc");
+
+                     ExecuteQuery(QueryTO,function(queryResult){
+                          //return(queryResult);
+                       var seloption = "";
+                          $.each(queryResult,function(i){
+
+                            if (queryResult[i].ui_obj_typ.trim() == 'EditBox')
+                              {
+                                  var SelHTML=$('<label><strong>'+queryResult[i].ui_text + ':</strong></label>' +
+                                  '<input type="text" style="Margin-right: 25px;Margin-top:10px" name="textbox" id="Param_id' + queryResult[i].param_id + '" value="" >');
+                                   SelHTML.appendTo('#ActionParamDiv');
+                              }
+                            else //i.e
+                              {
+                                var sDropVals=queryResult[i].ui_obj_val.split(";");
+
+                                  var s = $('<select style="Margin-right:25px;Margin-top:10px" />');
+                                  for(var val in sDropVals)
+                                  {
+                                      $('<option/>', {value: sDropVals[val], text: sDropVals[val]  }).appendTo(s);
+                                  }
+                                  //s='<label>'+queryResult[i].ui_text+s+'</label>'
+                                  s.appendTo('#ActionParamDiv');
+
+                              };
+                          });
+
+                          newTextBoxDiv.appendTo("#FldSet_WebObj_StepAction");
+                          $("#TestStep_AddToFlow").prop('disabled', false);
+                     });
+                 }
+                else
+                 {
+                  ResetPerfActionSel();
+                 };
+           }
+        );
+
+    //
+
+     //Reset functions
+
+     function ResetPerfActionSel()
+     {
+       $('#Sel_PerfAction')
+          .find('option')
+          .remove()
+          .end()
+          .append('<option select="selected" value="...">...</option>');
+
+     }
+
+
+$(function()
+{
+var data = [
+  ["Aman", "Aman1", "Aman2", "Aman3"],
+  [10, 11, 12, 13],
+  [20, 11, 14, 13],
+  [30, 15, 12, 13]
+];
+
+// var data = function () {
+//    return Handsontable.helper.createSpreadsheetData(100, 12);
+//   };
+
+var container = document.getElementById('TestDataTable');
+var hot = new Handsontable(container, {
+  data: data,
+  minSpareRows: 11,
+  rowHeaders: true,
+  colHeaders: true,
+  contextMenu: true,
+  stretchH: 'none',
+  columnSorting: true
+});
+}
+);
+
+
+
+
+     function ResetPerfActionFields()
+     {
+      $("#ActionParamDiv").remove();
+      $("#TestStep_AddToFlow").prop('disabled', true);
+     }
+
+    //Add Steps to Test Flow
+    $(function()
+       {
+            $("#TestStep_AddToFlow").click( function()
+                 {
+                   //Add Row Data
+                    //iRowCount=$('#testFlow').dataTable().fnSettings().fnRecordsDisplay();
+                    //iStepNum=iRowCount+1;
+                   var row = $("<tr></tr>");
+                       row.append( $("<td>").text(1) );
+                       row.append( $("<td>").text("Function Description Goes here") );
+                       row.append( $("<td>").text("Test Objec desc goes here") );
+                       row.append( $("<td>").text("Action") );
+                       row.append( $("<td>").text("Test Data") );
+
+                  $("#testFlow").append(row);
+
+                   $("#testFlow").show();
+                   //Enable Data Table
+                   var testFlowTbl=$('#testFlow').dataTable();
+                   //{
+                        // "bProcessing":true,
+                        // "aaData": queryData,
+                        //     "aoColumns": [{
+                        //     "mData": "or_id"},
+                        //     {"mData": "name"}]
+                    //}
+                    //);
+
+
+                   $('#testFlow tbody').on( 'click', 'tr', function () {
+                        console.log( testFlowTbl.row( this ).data() );
+                    } );
+                 }
+            );
+        }
+      );
+
+     //work on Table Row data
+      $(function()
+      {
+        $('#testFlow tbody').on( 'click', 'tr', function () {
+            console.log( table.row( this ).data() );
+        } );
+      }
+      );
+
+      //Get Value of Test Step Type dropdown
+        $("#selectStpTyp").change(function(){
+
+          var testStepType=$(this).find("option:selected").val();
+          //alert(testStepType);
+          if (testStepType=="Call Existing Test")
+            {}
+          else if (testStepType=="Web Object Interaction")
+            {
+
+              $("#FldSet_WebObj").show();
+              $("#FldSet_WebObj_Rdio").buttonset();
+              ///Button for object in new or old repo  inalized upfront
+              $("#FldSet_WebObj_AddToRepo_Rdio").buttonset();
+              $("#FldSet_WebObj_AddNewObj_ToNewRepo").hide();
+              $("#FldSet_WebObj_AddNewObj_RepoName").hide();
+ //             $("#FldSet_WebObj_AddNewObj_ToExistRepo").hide();
+              //$("#FldSet_WebObj_Rdio").show();
+
+
+              $('#FldSet_WebObj_Rdio input[type=radio]').change(function() {
+                 var stepType=this.value;
+                if(stepType == "NewObj"){
+                  $("#FldSet_WebObj_AddNewObj").show();
+                  $("#FldSet_WebObj_FromRepo").hide();
+                  $("#FldSet_WebObj_AddToRepo_Rdio").buttonset();
+
+                  //check if object needs to be added to new repository or existing
+                    $("#FldSet_WebObj_AddToRepo_Rdio input[type=radio]").change(function() {
+                        var ObjRepoType=this.value;
+                          if (ObjRepoType=="AddToNewRepo")
+                            { $("#FldSet_WebObj_AddNewObj_ToExistRepo").hide();
+                              $("#FldSet_WebObj_AddNewObj_ToNewRepo").show();
+                              $("#FldSet_WebObj_AddNewObj_RepoName").show();
+                              ////<select id="Add_Obj_Prop_drpdwn"><option>xpath</option><option>Tag</option></select>
+                              //'<select id="Add_Obj_Prop_drpdwn'+counter+'"><option>xpath</option><option>Tag</option></select>'
+                              //Functionlity to add Property Rows
+                               var counter = 0;
+                                  $("#addrow-button").on("click", function () {
+
+                                      counter = $('#ObjPropsTbl tr').length - 2;
+
+                                      var newRow = $("<tr>");
+                                      var cols = "";
+
+                                      cols += '<td><select id="Add_Obj_Prop_drpdwn'+counter+'"><option>xpath</option><option>Tag</option></select></td>';
+                                      cols += '<td><input type="text" name="PropVal' + counter + '"/></td>';
+
+                                      cols += '<td><input type="button" class="ibtnDel"  value="Delete"></td>';
+                                      newRow.append(cols);
+                                      if (counter == 5) $('#addrow-button').attr('disabled', true).prop('value', "Reached Set Limit");
+                                      $("table.add-del-rows").append(newRow);
+                                      counter++;
+                                  });
+
+                                  $("table.add-del-rows").on("click", ".ibtnDel", function (event) {
+                                      $(this).closest("tr").remove();
+                                      counter -= 1
+                                      $('#addrow-button').attr('disabled', false).prop('value', "Add Property");
+                                  });
+
+                            }
+                          else if (ObjRepoType=="AddToRepo")
+                            {
+                              $("#FldSet_WebObj_AddNewObj_ToExistRepo").show();
+                              $("#FldSet_WebObj_AddNewObj_ToNewRepo").hide();
+                              $("#FldSet_WebObj_AddNewObj_RepoName").hide();
+
+
+                                $('#FldSet_WebObj_AddNewObj_SelRepo').change(function(){
+                                                if ($(this).find("option:selected").val() !=="...")
+                                                 {
+                                                  $("#FldSet_WebObj_AddNewObj_ToNewRepo").show();
+                                                  //$('#form_div').appendTo('#display_div');
+                                               }
+                                              });
+                            }
+
+                      });
+
+                }
+                else if(stepType == "SelObjFromRepo"){
+                   $("#FldSet_WebObj_FromRepo").show();
+                  $("#FldSet_WebObj_AddNewObj").hide();
+                }
+               });
+
+            }
+          else if (testStepType=='Function Call')
+            {}
+          else if (testStepType=='Comment')
+            {}
+          else if (testStepType=='Loop')
+            {}
+          else if (testStepType=='Varibale')
+            {} ;
+
+        });
+
+      });
+
+    </script>
+
+
+    <script type="text/javascript" id="MainAccordianfunctionality">
+    $(document).ready(function(){
+        var headers = $('#accordion .accordion-header');
+        var contentAreas = $('#accordion .ui-accordion-content ').hide();
+        var expandLink = $('.accordion-expand-all');
+
+        // add the accordion functionality
+        headers.click(function() {
+            var panel = $(this).next();
+            var isOpen = panel.is(':visible');
+
+            // open or close as necessary
+            panel[isOpen? 'slideUp': 'slideDown']()
+                // trigger the correct custom event
+                .trigger(isOpen? 'hide': 'show');
+
+            // stop the link from causing a pagescroll
+            return false;
+          });
+
+            // hook up the expand/collapse all
+            expandLink.click(function(){
+                var isAllOpen = $(this).data('isAllOpen');
+
+                contentAreas[isAllOpen? 'hide': 'show']()
+                    .trigger(isAllOpen? 'hide': 'show');
+            });
+
+            // when panels open or close, check to see if they're all open
+            contentAreas.on({
+                // whenever we open a panel, check to see if they're all open
+                // if all open, swap the button to collapser
+                show: function(){
+                    var isAllOpen = !contentAreas.is(':hidden');
+                    if(isAllOpen){
+                        expandLink.text('Collapse All')
+                            .data('isAllOpen', true);
+                    }
+                },
+                // whenever we close a panel, check to see if they're all open
+                // if not all open, swap the button to expander
+                hide: function(){
+                    var isAllOpen = !contentAreas.is(':hidden');
+                    if(!isAllOpen){
+                        expandLink.text('Expand all')
+                        .data('isAllOpen', false);
+                    }
+                }
+            });
+    });
+
+    </script>
+
+
+
+
+
+
+  <style>
+      body{
+        font: 62.5% "Trebuchet MS", sans-serif;
+        margin:30px;
+      }
+      .appHeaders {
+        margin-top: 2em;
+      }
+      .noclose .ui-dialog-titlebar-close{
+          display:none;
+      }
+      .accordion-expand-holder {
+        text-align: center;
+        padding: 10px;
+      }
+      #dialog-link {
+        padding: .4em 1em .4em 20px;
+        text-decoration: none;
+        position: relative;
+      }
+      #dialog-link span.ui-icon {
+        margin: 0 5px 0 0;
+        position: absolute;
+        left: .2em;
+        top: 50%;
+        margin-top: -8px;
+      }
+      #icons {
+        margin: 0;
+        padding: 0;
+      }
+      #icons li {
+        margin: 2px;
+        position: relative;
+        padding: 4px 0;
+        cursor: pointer;
+        float: left;
+        list-style: none;
+      }
+      #icons span.ui-icon {
+        float: left;
+        margin: 0 4px;
+      }
+      .fakewindowcontain .ui-widget-overlay {
+        position: absolute;
+      }
+      .error {
+          font: normal 10px arial;
+          padding: 3px;
+          margin: 3px;
+          background-color: #ffc;
+          border: 1px solid #c00;
+      }
+
+      select {
+        width: 200px;
+      }
+  </style>
+
+</head>
+
+
+<body>
+<div id="middleCol">
+<div id="dialog-form" title="Add Test/Edit Existing">
+  <form id="UI_TestTypeSelect">
+    <fieldset>
+      <div id="NewEditDialog" class="buttonset">
+            <input type="radio" id="NewTest"  name="TestTypeSelect" checked="checked" value="New" /><label for="NewTest">New</label>
+            <input type="radio" id="EditTest" name="TestTypeSelect" value="Edit" /><label for="EditTest">Edit</label>
+      </div>
+            <div id="UI_TestType_New" style="display: block">
+                    <BR>
+                    <div class="label">Test Name:</div>
+                    <input id="NewEditDialog_TstNm" type="text" class='required'>
+                    <BR>
+                    <div class="label">Description:</div>
+                    <textarea id="NewEditDialog_TstDesc" rows="5" cols="30"></textarea>
+                     <BR><BR>
+            </div>
+            <div id="UI_TestType_Edit" style="display: none">
+                 <h2 class="appHeaders">Select from Available Tests</h2>
+                  <select id="selectmenu">
+                    <option>Dummy Test 1</option>
+                    <option>Dummy Test 2</option>
+                    <option selected="selected">Dummy Test 3</option>
+                    <option>Dummy Test 4</option>
+                    <option>Dummy Test 5</option>
+                  </select>
+                 <BR><BR>
+              </div>
+      </fieldset>
+  </form>
+</div>
+<p class="accordion-expand-holder">
+    <button class="accordion-expand-all" id="ExpandBttn" >Expand All</button>
+    <div id="switcher"></div>
+</p>
+<div id="accordion" class="ui-accordion ui-widget ui-helper-reset">
+    <h3 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" id="testDtlsHdr">
+        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+        Test Details
+    </h3>
+    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+              <div id="TestDetails" style="display: inline" >
+                  <div class="label"><strong>Test Name:</strong></div>
+                  <input id="TestDetails_Name" title="type &quot;a&quot;">
+                  <div class="label"><strong>Description:</strong></div>
+                  <textarea id="TestDetails_TstDesc" rows="5" cols="30"></textarea>
+              </div>
+              <div id="TestDetails_TstPrpty" class="ui-state-highlight ui-corner-all" style="margin-top:10px; padding: 0.7em;">
+                    <input type="checkbox" id="TestDetails_Reusable" ><label for="TestDetails_Reusable">ReUsable</label>
+                    <label for="spinner"><strong>Iterate:</strong></label>
+                    <input id="spinner" name="value">
+              </div>
+    </div>
+    <h3 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+        Step Details
+    </h3>
+    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+       <div id="TestStep_StepTyp" >
+                 <h4 class="appHeaders">Select Step Type</h4>
+                  <select id="selectStpTyp">
+                    <option selected="selected">Select Step.....</option>
+                    <option>Call Existing Test</option>
+                    <option>Web Object Interaction</option>
+                    <option>Function Call</option>
+                    <option >Comment</option>
+                    <option>Loop</option>
+                    <option>Varibale</option>
+                  </select>
+        </div>
+       <div id="TestStep_StepDtls" >
+         <form id="TestStepForm"  style="display:block">
+          <fieldset id="FldSet_WebObj" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:none;">
+             <div id="FldSet_WebObj_Rdio" class="buttonset">
+              <input type="radio" id="SelectFrmOR"  name="ObjTypeSelect" checked="checked" value="SelObjFromRepo" /><label for="SelectFrmOR">Select from Repository</label>
+              <input type="radio" id="AddNewObj" name="ObjTypeSelect" value="NewObj" /><label for="AddNewObj">New Object</label>
+            </div>
+              <fieldset id="FldSet_WebObj_FromRepo" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:flex;" >
+                <div class="label"><strong>Select Repository:</strong></div>
+                <select id="FldSet_WebObj_FromRepo_SelRepo">
+                  <option>...</option>
+                </select>
+              </fieldset>
+              <fieldset id="FldSet_WebObj_AddNewObj" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:none; border: 1.5px groove;" >
+                <div class="label"><strong>Add New Object</strong></div>
+                <br>
+                 <div id="FldSet_WebObj_AddToRepo_Rdio" class="buttonset">
+                  <input type="radio" id="AddObjToRepo"  name="ObjRepoTypeSelect" checked="checked" value="AddToRepo" /><label for="AddObjToRepo">Add To Existing Repository</label>
+                  <input type="radio" id="AddObjToNewRepo" name="ObjRepoTypeSelect" value="AddToNewRepo" /><label for="AddObjToNewRepo">New Repository</label>
+                 </div>
+                 <fieldset id="FldSet_WebObj_AddNewObj_RepoName" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:flex; border: 1.5px groove;">
+                        <div class="label"><strong>Repository Name</strong></div>
+                        <input type="text" id="FldSet_WebObj_AddNewObj_PageName" name="Page Name" maxlength="50" size="50">
+                        <br>
+                 </fieldset>
+                  <fieldset id="FldSet_WebObj_AddNewObj_ToExistRepo" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:flex; border: 1.5px groove;">
+                       <div class="label"><strong>Select Repository to add Object to</strong></div>
+                       <select id="FldSet_WebObj_AddNewObj_SelRepo">
+                        <option selected="selected">...</option>
+                       </select>
+                   </fieldset>
+                    <fieldset id="FldSet_WebObj_AddNewObj_ToNewRepo" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:flex; border: 1.5px groove;">
+                                        <legend>Object Properties</legend>
+                                        <div class="label"><strong>Object Name</strong></div>
+                                        <input type="text" id="FldSet_WebObj_AddNewObj_ObjName" name="Object Name" maxlength="50" size="50">
+                                        <br>
+                                         <div class="label"><strong>Object Type</strong></div>
+                                        <select id="selectObjectType">
+                                          <option>...</option>
+                                        </select>
+                                        <br>
+                                        <table id="ObjPropsTbl" class="add-del-rows" style="display:none">
+                                          <thead>
+                                              <tr>
+                                                  <td><strong>Property</strong></td>
+                                                  <td align="center"><strong>Value</strong></td>
+                                                  <td></td>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr>
+                                                  <td>
+                                                      HTML ID
+                                                  </td>
+                                                  <td>
+                                                      <input type="text" name="PropVal" />
+                                                  </td>
+                                                  <td><a class="deleteRow"></a>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                          <tfoot>
+                                              <tr>
+                                                  <td colspan="2" style="text-align: left;">
+                                                      <input type="button" id="addrow-button" value="Add Property" />
+                                                  </td>
+                                              </tr>
+                                          </tfoot>
+                                      </table>
+                                      <br>
+                                       <fieldset id="FldSet_WebObj_StepAction" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:flex; border: 1.5px groove;">
+                                              <legend>Perform Action</legend>
+                                              <select id="Sel_PerfAction">
+                                                    <option>...</option>
+                                              </select>
+                                        </fieldset>
+                    </fieldset>
+              </fieldset>
+          </fieldset>
+          <fieldset id="FldSet_Comment" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:none;">
+            <div class="label"><strong>Comment:</strong></div>
+            <textarea id="FldSet_Comment_Text" rows="6" cols="30"></textarea>
+          </fieldset>
+         <fieldset id="FldSet_Function" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:none;">
+            <div class="label"><strong>Select Function to Call:</strong></div>
+            <select id="selectFunction">
+            </select>
+          </fieldset>
+          <fieldset id="FldSet_Loop" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:none;">
+            <P>
+            <div class="label"><strong>Loop Step:</strong></div>
+            <input type="text" name="LoopFrom" maxlength="3" size="3">
+            <div class="label"><strong>To:</strong></div>
+            <input type="text" name="LoopTo" maxlength="3" size="3">
+            </P>
+            <textarea id="FldSet_Loop_Text" rows="6" cols="30"></textarea>
+           </fieldset>
+          <fieldset id="FldSet_Varibale" class="ui-corner-all" style="margin-top:5px; padding: 0.7em; display:none;">
+            <div class="label"><strong>Variable:</strong></div>
+          </fieldset>
+         </form>
+       </div>
+        <p>
+          <button id="TestStep_DelStep">Delete Step</button>
+          <button id="TestStep_AddToFlow">Add to Test</button>
+        </p>
+    </div>
+    <h3 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+        Test Flow
+    </h3>
+    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+        <table id="testFlow" class="display" cellspacing="0" width="100%" style="display:none">
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>Description</th>
+                    <th>Object</th>
+                    <th>Action</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Step</th>
+                    <th>Description</th>
+                    <th>Object</th>
+                    <th>Action</th>
+                    <th>Value</th>
+                </tr>
+            </tfoot>
+        </table>
+<!--           <input type="button" id="addORTree-button" value="Add Tree" />
+          <input type="button" id="remORTree-button" value="Delete Row" onclick"remTree"/> -->
+        </p>
+    </div>
+
+    <h3 class="accordion-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all">
+        <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+        Test Data
+    </h3>
+    <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">
+        <p>
+            <div id="TestDataTable"></div>
+        </p>
+    </div>
+</div>
+</div>
+</body>
+</html>

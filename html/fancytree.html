@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <title>ATOM Object Manager</title>
+	<link rel="stylesheet" href="../css/jquery-ui.min.css">
+	<link rel="stylesheet" href="../css/jquery-ui.theme.css">
+	<link rel="stylesheet" href="../css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="../css/objMgr.css">
+    <link rel="stylesheet" href="../css/skin-win8/ui.fancytree.css">
+
+	<script src="../js/jquery-3.2.1.js"> </script>
+	<script src="../js/jquery-ui.min.js"></script>
+	<script src="../js/jquery.dataTables.js"></script>
+     <script src="../js/frontend.js"></script>
+     <script src="../js/jquery.fancytree.min.js"></script>
+    <script src="../js/jquery.fancytree.edit.js"></script>
+    <script src="../js/jquery.fancytree.dnd.js"></script>
+
+
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+             var tree = $("#objTree");
+                var source = [
+                   // {title: "AppName", folder: true, expanded: false, children: [{title: "Button",folder: true, expanded: false, children: [{title: "ABC",}]}]}
+                   {title: "AppName", folder: true, expanded: false}
+                ];
+
+            var options = {
+                checkbox: true,
+             extensions: ["edit","dnd"],
+                source: source,
+                edit: {
+                    // Available options with their default:
+                    adjustWidthOfs: 4,   // null: don't adjust input size to content
+                    inputCss: { minWidth: "3em" },
+                    triggerStart: ["f2", "dblclick", "shift+click", "mac+enter"],
+                    beforeEdit: $.noop,  // Return false to prevent edit mode
+                    edit: $.noop,        // Editor was opened (available as data.input)
+                    beforeClose: $.noop, // Return false to prevent cancel/save (data.input is available)
+                    save: $.noop,         // Save data.input.val() or return false to keep editor open
+                    close: $.noop,       // Editor was removed
+                },
+                dnd: {
+                    preventVoidMoves: true,
+                    preventRecursiveMoves: true,
+                    autoExpandMS: 400,
+                    dragStart: function(node, data) {
+                        console.log('Drag start >>', node, data, this);
+                        return true;
+                    },
+                    dragEnter: function(node, data) {
+                        console.log('Drag enter >>', node, data, this);
+                        // return ["before", "after"];
+                        return true;
+                    },
+                    dragDrop: function(node, data) {
+                        console.log('Drag drop >>', node, data, this);
+                        data.otherNode.moveTo(node, data.hitMode);
+                    }
+                },
+            };
+
+tree.fancytree(options);
+
+//$(".widget-tree").fancytree("destroy");
+//var tree=$(".widget-tree").fancytree("getTree");
+
+		} );
+
+
+        function addObjectToTree(sPageName,sObjectName){
+            var rootNode=$("#objTree").fancytree("getRootNode");
+            var pageRoot= findNode(sPageName,rootNode);
+         //First Check if Page Node is Present if not create Page Node
+            if (pageRoot===false) {
+                    var childNode = rootNode.getFirstChild().addChildren({
+                    title: sPageName,
+                    tooltip:sPageName,
+                    folder: true,
+                    icon: "customdoc1.gif"
+                });
+               /* childNode.addChildren({
+                    title: "Document using a custom icon",
+                    icon: "customdoc1.gif"
+                });*/
+            }
+
+            //Add Object to Page
+            var pageRoot= findNode(sPageName,rootNode);
+              pageRoot.addChildren({
+                    title: sObjectName,
+                    tooltip:sObjectName,
+                    folder: true,
+                    icon: "customdoc1.gif"
+                });
+
+        }
+                       //Return Page Root else False
+                    function findNode(sNodeTitle,root){
+                            if (root.findAll(sNodeTitle).length === 0) {
+                                return false;
+                            } else {
+                                return root.findAll(sNodeTitle)[0];
+                            }
+                    }
+
+
+
+function download(){
+                        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(items));
+                        alert (dataStr);
+var dlAnchorElem = document.getElementById('downloadAnchorElem');
+dlAnchorElem.setAttribute("href",     dataStr     );
+dlAnchorElem.setAttribute("download", "scene.json");
+dlAnchorElem.click();
+
+}
+
+	</script>
+
+
+  <style></style>
+
+  </head>
+  <body >
+
+<div class="widget-tree" id="objTree"></div>
+
+<button onclick="addObjectToTree('PageName','ObjectName')">Add</button>
+
+<button onclick="loadJSON()">loadJSON</button>
+
+<form id="aform">
+First name: <input type="text" name="firstname" /><br />
+Last name: <input type="text" name="lastname" />
+</form>
+
+<button id="downloadAnchorElem" onclick="download()">Save</button>
+
+  </body>
+</html>
