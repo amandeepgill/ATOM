@@ -16,7 +16,7 @@
   ],
   "author": "Amandeep Gill",
   "devDependencies": {
-    "electron": "~1.6.2"
+    "electron": "~7.0.0"
   },
   "dependencies": {
     "chromedriver": "^2.33.2",
